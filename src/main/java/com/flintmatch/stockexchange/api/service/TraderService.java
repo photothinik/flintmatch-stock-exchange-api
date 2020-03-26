@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import java.sql.SQLException;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class TraderService {
@@ -19,7 +20,11 @@ public class TraderService {
     }
 
     public Trader getTraderById(Long id) throws SQLException {
-        return this.traderRepository.findById(id).get();
+        Optional<Trader> result = this.traderRepository.findById(id);
+        if( result.isPresent())
+            return result.get();
+        else
+            throw new IllegalArgumentException("Unable to find stock trader with id '" + id + "'");
     }
 
     public void save(Trader t) {

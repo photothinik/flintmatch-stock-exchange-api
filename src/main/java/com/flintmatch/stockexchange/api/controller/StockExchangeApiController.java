@@ -1,6 +1,8 @@
 package com.flintmatch.stockexchange.api.controller;
 
+import com.flintmatch.stockexchange.api.model.Order;
 import com.flintmatch.stockexchange.api.model.Trader;
+import com.flintmatch.stockexchange.api.service.OrderService;
 import com.flintmatch.stockexchange.api.service.TraderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
@@ -15,6 +17,9 @@ public class StockExchangeApiController {
 
     @Autowired
     private TraderService traderService;
+
+    @Autowired
+    private OrderService orderService;
 
 
     @RequestMapping(value = "/api/version", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
@@ -57,6 +62,41 @@ public class StockExchangeApiController {
     public @ResponseBody String delete(@PathVariable String id) throws SQLException {
         this.traderService.delete(Long.valueOf(id));
         return "Deleted: id";
+    }
+
+        /*
+     +++++++++++++++++ ORDER OBJ ++++++++++++++++++
+     */
+
+    // Get all
+    @RequestMapping(value = "/api/orders", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    public @ResponseBody List<Order> allOrders() throws SQLException {
+        return this.orderService.getAllOrders();
+    }
+
+    // Get by ID
+    @RequestMapping(value = "/api/orders/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    public @ResponseBody Order getOrderById(@PathVariable String id) throws SQLException {
+        return this.orderService.getOrderById(Long.valueOf(id));
+    }
+
+    // Create
+    @RequestMapping(value = "/api/orders", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
+    public @ResponseBody Order create(@Valid Order order) throws SQLException {
+        this.orderService.save(order);
+        return order;
+    }
+
+    // Update
+    @RequestMapping(value = "/api/orders/{id}", method = RequestMethod.PUT, produces = MediaType.APPLICATION_JSON_VALUE)
+    public @ResponseBody Order update(@Valid Order order) {
+        throw new RuntimeException("Updates to an existing order not allowed!");
+    }
+
+    // Delete
+    @RequestMapping(value = "/api/orders/{id}", method = RequestMethod.DELETE, produces = MediaType.TEXT_PLAIN_VALUE)
+    public @ResponseBody String deleteOrder(@PathVariable String id) {
+        throw new RuntimeException("Not implemented");
     }
 
 }
