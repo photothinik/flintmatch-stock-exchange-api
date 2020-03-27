@@ -1,8 +1,10 @@
 package com.flintmatch.stockexchange.api.controller;
 
 import com.flintmatch.stockexchange.api.model.Order;
+import com.flintmatch.stockexchange.api.model.OrderTransaction;
 import com.flintmatch.stockexchange.api.model.Trader;
 import com.flintmatch.stockexchange.api.service.OrderService;
+import com.flintmatch.stockexchange.api.service.OrderTransactionService;
 import com.flintmatch.stockexchange.api.service.TraderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
@@ -20,6 +22,9 @@ public class StockExchangeApiController {
 
     @Autowired
     private OrderService orderService;
+
+    @Autowired
+    private OrderTransactionService orderTransactionService;
 
 
     @RequestMapping(value = "/api/version", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
@@ -64,7 +69,7 @@ public class StockExchangeApiController {
         return "Deleted: id";
     }
 
-        /*
+    /*
      +++++++++++++++++ ORDER OBJ ++++++++++++++++++
      */
 
@@ -98,5 +103,22 @@ public class StockExchangeApiController {
     public @ResponseBody String deleteOrder(@PathVariable String id) {
         throw new RuntimeException("Not implemented");
     }
+
+    /*
+     +++++++++++++++++ ORDER TRANSACTION OBJ ++++++++++++++++++
+     */
+
+    // Get all
+    @RequestMapping(value = "/api/ordertransactions", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    public @ResponseBody List<OrderTransaction> allOrderTransactions() throws SQLException {
+        return this.orderTransactionService.getAllOrderTransactions();
+    }
+
+    // Get by ID
+    @RequestMapping(value = "/api/ordertransactions/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    public @ResponseBody OrderTransaction getOrderTransactionById(@PathVariable String id) throws SQLException {
+        return this.orderTransactionService.getOrderTransactionById(Long.valueOf(id));
+    }
+
 
 }

@@ -1,5 +1,7 @@
 package com.flintmatch.stockexchange.api.model;
 
+import org.hibernate.annotations.Type;
+
 import javax.persistence.*;
 
 @Entity
@@ -18,7 +20,7 @@ public class Order {
 
     private Integer totalQuantity;
 
-    private boolean fulfilled = false;
+    private String fulfilled = "N";
 
     public Order() {
     }
@@ -55,19 +57,19 @@ public class Order {
         this.totalQuantity = totalQuantity;
     }
 
-    public boolean isFulfilled() {
-        return fulfilled;
-    }
-
-    public void setFulfilled(boolean fulfilled) {
-        this.fulfilled = fulfilled;
-    }
-
     public String getOrderType() {
         return orderType;
     }
 
     public void setOrderType(String orderType) {
         this.orderType = orderType;
+    }
+
+    public String getFulfilled() {
+        return fulfilled;
+    }
+
+    public void setFulfilled(String fulfilled) {
+        this.fulfilled = fulfilled;
     }
 }

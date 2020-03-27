@@ -26,12 +26,7 @@ public class OrderService {
             throw new IllegalArgumentException("Unable to find stock order with id '" + id + "'");
     }
 
-    public void save(Order order) {
-
-        System.out.println("Order Type: |" + order.getOrderType() + "|len=" + order.getOrderType().length());
-
-        this.orderRepository.save(order);
-    }
+    public void save(Order order) { this.orderRepository.save(order); }
 
     public void delete(Long id) {
         this.orderRepository.deleteById(id);
