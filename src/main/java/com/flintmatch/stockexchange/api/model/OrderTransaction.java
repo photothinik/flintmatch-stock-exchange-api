@@ -6,7 +6,7 @@ import javax.persistence.IdClass;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "stock_order_transactions")
+@Table(name = "stock_order_transaction")
 @IdClass(OrderTransactionId.class)
 public class OrderTransaction {
 
