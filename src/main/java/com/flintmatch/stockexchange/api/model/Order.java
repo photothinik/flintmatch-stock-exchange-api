@@ -1,7 +1,5 @@
 package com.flintmatch.stockexchange.api.model;
 
-import org.hibernate.annotations.Type;
-
 import javax.persistence.*;
 
 @Entity
@@ -12,7 +10,9 @@ public class Order {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private Long traderId;
+    @ManyToOne
+    @JoinColumn(name = "trader_id", referencedColumnName = "id", insertable = false, updatable = false)
+    private Trader trader;
 
     private String orderType;
 
@@ -31,14 +31,6 @@ public class Order {
 
     public void setId(Long id) {
         this.id = id;
-    }
-
-    public Long getTraderId() {
-        return traderId;
-    }
-
-    public void setTraderId(Long traderId) {
-        this.traderId = traderId;
     }
 
     public String getStockSymbol() {
@@ -71,5 +63,13 @@ public class Order {
 
     public void setFulfilled(String fulfilled) {
         this.fulfilled = fulfilled;
+    }
+
+    public Trader getTrader() {
+        return trader;
+    }
+
+    public void setTrader(Trader trader) {
+        this.trader = trader;
     }
 }
