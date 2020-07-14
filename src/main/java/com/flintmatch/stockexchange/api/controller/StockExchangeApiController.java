@@ -30,7 +30,7 @@ public class StockExchangeApiController {
 
     @RequestMapping(value = "/api/version", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     public @ResponseBody String version()  {
-        return "hello";
+        return "1.0.0";
     }
 
     /*
